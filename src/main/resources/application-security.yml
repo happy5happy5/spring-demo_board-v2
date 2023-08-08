@@ -1,0 +1,26 @@
+server:
+  port: 9090
+spring:
+#  live reload
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  freemarker:
+    cache: false
+# static resource
+  web:
+    resources:
+      static-locations: classpath:/static/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test_db_board?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: Allen8731!
+#  mybatis:
+#    type-aliases-package: com.msa.springdemo_boardv2.model
+#    configuration:
+#      map-underscore-to-camel-case: true

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Board List</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>Date</th>
+                <th>Password</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${boards}">
+                <td th:text="${board.no}"></td>
+                <td th:text="${board.title}"></td>
+                <td th:text="${board.writer}"></td>
+                <td th:text="${board.createdTime}"></td>
+<!--                console.log(board) 나타내기-->
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+
+                    var message = /*[[${board}]]*/ 'default';
+                    console.log(message);
+
+                    /*]]>*/
+                </script>
+                <td th:text="${board.password}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+<!--                이전 버튼은 현재페이지에서 -10 한 페이지를 표시-->
+<!--                다음 버튼은 현재페이지에서 +10 한 페이지를 표시-->
+<!--                현재 페이지가 1이면 이전 버튼은 비활성화-->
+<!--                현재 페이지가 마지막 페이지면 다음 버튼은 비활성화-->
+
+                <li th:class="${hasPreviousPages} ? 'page-item' : 'page-item disabled'">
+                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${currentPageNum - 10}, pageSize=${10})}">
+                        Previous
+                    </a>
+                </li>
+
+<!--                페이지 10개 까지만 표시-->
+<!--                현재 페이지는 다르게 표시-->
+<!--                현재 페이지 기준으로 5개씩 이전, 이후 페이지 표시-->
+
+                <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                    th:if="${i > currentPageNum - 5 and i < currentPageNum + 6}"
+                    th:class="${currentPageNum == i} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${i}, pageSize=${10})}"
+                       th:text="${i}"></a>
+                </li>
+
+
+
+                <li th:class="${hasNextPages} ? 'page-item' : 'page-item disabled'">
+                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${currentPageNum + 10}, pageSize=${10})}">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

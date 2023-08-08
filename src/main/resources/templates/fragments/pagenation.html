@@ -1,0 +1,35 @@
+<div class="card-footer">
+  <nav aria-label="Page navigation example">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="sizeMenu" data-bs-toggle="dropdown" aria-expanded="false">
+        Size
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sizeMenu">
+        <li><a class="dropdown-item" onclick="setSize(10)">10</a></li>
+        <li><a class="dropdown-item" onclick="setSize(20)">20</a></li>
+        <li><a class="dropdown-item" onclick="setSize(50)">50</a></li>
+        <li><a class="dropdown-item" onclick="setSize(100)">100</a></li>
+      </ul>
+    </div>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:class="${boardList.first} ? 'disabled' : ''">
+        <a class="page-link"
+           th:if="${boardList.hasPrevious}"
+           th:href="@{/board/list(page=${boardList.previousPageable().pageNumber})}">&laquo;</a>
+      </li>
+      <li class="page-item"
+          th:each="i : ${#numbers.sequence(1, boardList.totalPages)}"
+          th:if="${i > boardList.number - 4 and i < boardList.number + 6}">
+        <a class="page-link"
+           th:href="@{/board/list(page=${i-1})}"
+           th:text="${i}"></a>
+      </li>
+      <li class="page-item"
+          th:class="${boardList.last} ? 'disabled' : ''">
+        <a class="page-link"
+           th:if="${boardList.hasNext}"
+           th:href="@{/board/list(page=${boardList.nextPageable().pageNumber})}">&raquo;</a>
+      </li>
+    </ul>
+  </nav>
+</div>
