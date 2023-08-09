@@ -14,10 +14,6 @@
             <th scope="row">No</th>
             <td th:text="${no}"></td>
         </tr>
-        <!--        <tr>-->
-        <!--            <th scope="row">ID</th>-->
-        <!--            <td th:text="${[board.id](http://board.id/)}"></td>-->
-        <!--        </tr>-->
         <tr>
             <th scope="row">Title</th>
             <td th:text="${board.title}"></td>
@@ -34,10 +30,6 @@
             <th scope="row">Created Time</th>
             <td th:text="${board.created_Time}"></td>
         </tr>
-        <tr>
-            <th scope="row">Updated Time</th>
-            <td th:text="${board.updated_Time}"></td>
-        </tr>
         </tbody>
     </table>
     <div class="d-flex justify-content-end">
@@ -47,68 +39,10 @@
     </div>
 
     <!-- Delete Modal -->
-    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="delete-modal-label">Enter Password to Delete Board</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="delete-form">
-                        <div class="mb-3">
-                            <label for="password-input-d" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password-input-d" name="password">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger"  th:attr="data-board-id=${board.id}" onclick="deleteBoard(this)">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="fragments/modal :: #delete-modal"></div>
 
     <!-- Edit Modal -->
-    <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="edit-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="edit-modal-label">Edit Board</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="edit-form">
-                        <div class="mb-3">
-                            <label for="password-input-e" class="form-label">Current Password</label>
-                            <input type="password" class="form-control" id="password-input-e" name="password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="new-password-input-e" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="new-password-input-e" name="newPassword">
-                        </div>
-                        <div class="mb-3">
-                            <label for="title-input-e" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title-input-e" name="title" th:value="${board.title}">
-                            <small id="title-counter" class="form-text text-muted">0 / 33 characters</small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="content-input-e" class="form-label">Content</label>
-                            <textarea class="form-control" id="content-input-e" name="content" rows="12" th:text="${board.content}"></textarea>
-                            <small id="content-counter" class="form-text text-muted">0 / 80 characters</small>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary"
-                            th:attr="data-board-id=${board.id}, data-board-no=${no}"
-                            onclick="editBoard(this)">Edit</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="fragments/modal :: #edit-modal"></div>
 </div>
 
 <script>

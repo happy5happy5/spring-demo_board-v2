@@ -30,7 +30,6 @@ public class BoardController {
             @RequestParam(name = "sort", defaultValue = "created_Time") String sort,
             Model model
     ) {
-//        현재 boardcontroller list에 있다는걸 컨트롤러 프린트로 표시
         System.out.println("[BoardController] board/list ............");
         List<Board> boards = boardService.getBoardsByPage(pageNum, pageSize, sort);
 
