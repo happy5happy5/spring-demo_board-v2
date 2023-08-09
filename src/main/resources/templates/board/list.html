@@ -8,7 +8,7 @@
 <body>
 <div th:replace="fragments/layout :: nav_bar('board')"></div>
     <div class="container">
-        <table class="table table-hover">
+        <table class="table table-hover" style="height: 80vh">
             <thead>
             <tr>
 <!--            todo:이거 구현하려면 현재 어떤 기준으로 정렬되어있는지 받아야한다.(그래야 누르고 나서도 아래/위 화살표가 그대로있음)-->
@@ -16,7 +16,6 @@
                 <th><a th:href="@{${'/board/list'}(pageNum=${currentPageNum}, pageSize=${10}, sort='title')}">Title</a></th>
                 <th><a th:href="@{${'/board/list'}(pageNum=${currentPageNum}, pageSize=${10}, sort='writer')}">Writer</a></th>
                 <th><a th:href="@{${'/board/list'}(pageNum=${currentPageNum}, pageSize=${10}, sort='created_Time')}">Date</a></th>
-                <th>Password</th>
             </tr>
             </thead>
             <tbody>
@@ -37,54 +36,13 @@
 
 <!--                    /*]]>*/-->
 <!--                </script>-->
-                <td th:text="${board.password}"></td>
+
             </tr>
             </tbody>
         </table>
-        <nav aria-label="Page navigation">
-            <div class="d-flex justify-content-center mb-3">
-            <ul class="pagination">
-<!--                이전 버튼은 현재페이지에서 -10 한 페이지를 표시-->
-<!--                다음 버튼은 현재페이지에서 +10 한 페이지를 표시-->
-<!--                현재 페이지가 1이면 이전 버튼은 비활성화-->
-<!--                현재 페이지가 마지막 페이지면 다음 버튼은 비활성화-->
-
-                <li th:class="${hasPreviousPages} ? 'page-item' : 'page-item disabled'">
-                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${currentPageNum - 10}, pageSize=${10})}">
-                        Previous
-                    </a>
-                </li>
-
-<!--                페이지 10개 까지만 표시-->
-<!--                현재 페이지는 다르게 표시-->
-<!--                현재 페이지 기준으로 5개씩 이전, 이후 페이지 표시-->
-
-                <li th:each="i : ${#numbers.sequence(1, totalPages)}"
-                    th:if="${i > currentPageNum - 5 and i < currentPageNum + 6}"
-                    th:class="${currentPageNum == i} ? 'page-item active' : 'page-item'">
-                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${i}, pageSize=${10})}"
-                       th:text="${i}"></a>
-                </li>
-
-
-
-                <li th:class="${hasNextPages} ? 'page-item' : 'page-item disabled'">
-                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${currentPageNum + 10}, pageSize=${10})}">
-                        Next
-                    </a>
-                </li>
-            </ul>
-
-                <div class="d-flex justify-content-end mb-3 ps-5">
-                    <a href="/board/createform" class="btn btn-primary">Create</a>
-                </div>
-
-            </div>
-
-        </nav>
-
+<div th:replace="fragments/pagenation :: pagenation"></div>
     </div>
-<div th:replace="fragments/layout ::footer"></div>
+<!--<div th:replace="fragments/layout ::footer"></div>-->
     <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 

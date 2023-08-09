@@ -1,24 +1,79 @@
-<div class="card-footer">
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" th:class="${boardList.first} ? 'disabled' : ''">
-        <a class="page-link"
-           th:if="${boardList.hasPrevious}"
-           th:href="@{/board/list(page=${boardList.previousPageable().pageNumber})}">&laquo;</a>
-      </li>
-      <li class="page-item"
-          th:each="i : ${#numbers.sequence(1, boardList.totalPages)}"
-          th:if="${i > boardList.number - 4 and i < boardList.number + 6}">
-        <a class="page-link"
-           th:href="@{/board/list(page=${'i-1'})}"
-           th:text="${i}"></a>
-      </li>
-      <li class="page-item"
-          th:class="${boardList.last} ? 'disabled' : ''">
-        <a class="page-link"
-           th:if="${boardList.hasNext}"
-           th:href="@{/board/list(page=${boardList.nextPageable().pageNumber})}">&raquo;</a>
-      </li>
-    </ul>
-  </nav>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div th:fragment="pagenation">
+    <nav aria-label="Page navigation">
+        <div class="d-flex justify-content-center mb-3">
+            <ul class="pagination w-75">
+                <!--                이전 버튼은 현재페이지에서 -10 한 페이지를 표시-->
+                <!--                다음 버튼은 현재페이지에서 +10 한 페이지를 표시-->
+                <!--                현재 페이지가 1이면 이전 버튼은 비활성화-->
+                <!--                현재 페이지가 마지막 페이지면 다음 버튼은 비활성화-->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=1, pageSize=${10})}" aria-label="First">
+                        First
+                    </a>
+                </li>
+                <li>
+                    <a class="page-link"
+                       th:if="${currentPageNum - 10 < 1}"
+                       th:href="@{${'/board/list'}(pageNum=${1}, pageSize=${10})}">
+                        Previous
+                    </a>
+                    <a class="page-link"
+                       th:unless="${currentPageNum - 10 < 1}"
+                       th:href="@{${'/board/list'}(pageNum=${currentPageNum - 10}, pageSize=${10})}">
+                        Previous
+                    </a>
+                </li>
+
+                <!--                페이지 10개 까지만 표시-->
+                <!--                현재 페이지는 다르게 표시-->
+                <!--                현재 페이지 기준으로 5개씩 이전, 이후 페이지 표시-->
+
+
+<!--                todo: thymeleaf 에서 반올림 올림 내림 정수 변환 하는 방법 더 알아 보고-->
+<!--                        페이지 이동할 때 예를 들어 5에서 다음 누르면 11로 가도록 만들 어야 함 -->
+                <li class="d-flex justify-content-center w-75" >
+                    <div th:each="i : ${#numbers.sequence(1, totalPages)}"
+                         th:if="${T(java.lang.Math).ceil(i / 10.0) == T(java.lang.Math).ceil(currentPageNum / 10.0)}"
+                         th:class="${currentPageNum == i} ? 'page-item active d-inline' : 'page-item d-inline' ">
+                        <a class="page-link text-center" style="width: 3rem" th:href="@{${'/board/list'}(pageNum=${i}, pageSize=${10})}" th:text="${i}"></a>
+                    </div>
+                </li>
+
+                <li>
+                    <a class="page-link"
+                       th:if="${currentPageNum + 10 > totalPages}"
+                       th:href="@{${'/board/list'}(pageNum=${totalPages}, pageSize=${10})}">
+                        Next
+                    </a>
+                    <a class="page-link"
+                       th:unless="${currentPageNum + 10 > totalPages}"
+                       th:href="@{${'/board/list'}(pageNum=${currentPageNum + 10}, pageSize=${10})}">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{${'/board/list'}(pageNum=${totalPages}, pageSize=${10})}" aria-label="Last">
+                        Last
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-end mb-3 ps-5">
+                <a href="/board/createform" class="btn btn-primary">Create</a>
+            </div>
+
+        </div>
+
+    </nav>
 </div>
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
