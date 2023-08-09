@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Edit Form</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Edit Board</h1>
+    <form id="edit-form">
+        <input type="hidden" id="board-id" th:value="${board.id}">
+        <input type="hidden" id="board-no" th:value="${no}">
+        <div class="mb-3">
+            <label for="title-input" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title-input" name="title" th:value="${board.title}">
+        </div>
+        <div class="mb-3">
+            <label for="content-input" class="form-label">Content</label>
+            <textarea class="form-control" id="content-input" name="content" rows="10">${board.content}</textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelector('#edit-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼 제출 막기
+        const boardId = document.getElementById('board-id').value;
+        const boardNo = document.getElementById('board-no').value;
+        const title = document.getElementById('title-input').value;
+        const content = document.getElementById('content-input').value;
+        const data = {boardId, boardNo, title, content};
+        fetch("/board/edit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((response) => {
+            if (response.ok) {
+                alert("Board Edited");
+                window.location.href = "/board/detail?id=" + boardId + "&no=" + boardNo;
+            } else {
+                alert("Error occurred while editing the board");
+            }
+        });
+    });
+</script>
+</body>
+</html>

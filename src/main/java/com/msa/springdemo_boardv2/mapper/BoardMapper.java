@@ -1,7 +1,6 @@
 package com.msa.springdemo_boardv2.mapper;
 
 import com.msa.springdemo_boardv2.model.Board;
-import jdk.jfr.Timestamp;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -29,9 +28,15 @@ public interface BoardMapper {
 
     @Delete("DELETE FROM board WHERE id = #{id} AND writer = #{writer} AND password = #{password}")
     void deleteBoard(Long id, String writer, String password);
+// todo: 여기 적용이 안됨
+//    @Select("SELECT * FROM board ORDER BY #{sort} ASC LIMIT #{start}, #{pageSize}")
+    @Select("SELECT * FROM board ORDER BY created_time desc LIMIT #{start}, #{pageSize}")
 
-    @Select("SELECT * FROM board ORDER BY created_time DESC LIMIT #{start}, #{pageSize}")
-    List<Board> getBoardsByPage(int start, int pageSize);
+    List<Board> getBoardsByPage(int start, int pageSize, String sort);
+
+
+//    @Select("SELECT * FROM board ORDER BY created_time DESC LIMIT #{start}, #{pageSize}")
+//    List<Board> getBoardsByPage(int start, int pageSize);
 
     @Select("SELECT COUNT(*) FROM board")
     int getTotalRecords();

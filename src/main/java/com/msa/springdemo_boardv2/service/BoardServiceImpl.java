@@ -22,9 +22,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoardsByPage(int pageNum, int pageSize) {
+    public List<Board> getBoardsByPage(int pageNum, int pageSize, String sort) {
         int start = (pageNum - 1) * pageSize;
-        List<Board> boards = boardMapper.getBoardsByPage(start, pageSize);
+        List<Board> boards = boardMapper.getBoardsByPage(start, pageSize, sort);
         return boards;
     }
 

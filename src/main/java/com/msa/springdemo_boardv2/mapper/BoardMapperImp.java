@@ -24,9 +24,14 @@ public class BoardMapperImp implements BoardMapper{
     }
 
     @Override
-    public List<Board> getBoardsByPage(int start, int pageSize) {
-        return boardMapper.getBoardsByPage(start, pageSize);
+    public List<Board> getBoardsByPage(int start, int pageSize, String sort) {
+        return boardMapper.getBoardsByPage(start, pageSize, sort);
     }
+
+//    @Override
+//    public List<Board> getBoardsByPage(int start, int pageSize) {
+//        return boardMapper.getBoardsByPage(start, pageSize);
+//    }
 
     @Override
     public int getTotalRecords() {

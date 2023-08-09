@@ -3,10 +3,6 @@ package com.msa.springdemo_boardv2.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.ErrorResponse;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -16,8 +12,8 @@ public class BoardDTO {
     private String content;
     private String writer;
     private String password;
-    private Timestamp createdTime;
-    private Timestamp updatedTime;
+    private String created_Time;
+    private String updated_Time;
 
     public BoardDTO(Board board) {
         this.id = board.getId();
@@ -25,8 +21,8 @@ public class BoardDTO {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.password = board.getPassword();
-        this.createdTime = board.getCreatedTime();
-        this.updatedTime = board.getUpdatedTime();
+        this.created_Time = board.getCreated_Time();
+        this.updated_Time = board.getUpdated_Time();
     }
 
     // getters and setters
